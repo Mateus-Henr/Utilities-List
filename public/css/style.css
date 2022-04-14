@@ -1,0 +1,48 @@
+body
+{
+  background-color: grey;
+  text-align: center;
+}
+
+.head-title
+{
+  font-family: monospace;
+  font-size: 100px;
+  font-weight: bold;
+  margin-bottom: 100px;
+  padding: 10px;
+}
+
+.utility-img
+{
+  border-radius: 10%;
+  width: 400px;
+  height: 180px;
+}
+
+.add-item-form
+{
+  margin: 1.5rem auto 5rem auto;
+}
+
+.radio-group
+{
+
+}
+
+td
+{
+  font-size: 30px;
+  vertical-align: middle;
+}
+
+td input
+{
+  width: 30px;
+  height: 30px;
+}
+
+table
+{
+  padding: 10%;
+}
