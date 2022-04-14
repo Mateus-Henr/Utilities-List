@@ -4,7 +4,7 @@
   "description": "",
   "main": "app.js",
   "scripts": {
-    "start": "node server.js"
+    "start": "echo start"
   },
   "author": "",
   "license": "ISC",
@@ -13,7 +13,6 @@
     "body-parser": "^1.20.0",
     "cheerio": "^1.0.0-rc.10",
     "express": "^4.17.3",
-    "json-server": "^0.17.0",
     "request": "^2.88.2"
   }
 }
