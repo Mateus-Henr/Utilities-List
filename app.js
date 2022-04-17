@@ -6,6 +6,7 @@ const cheerio = require("cheerio");
 
 const INDEX_HTML = "/index.html";
 const DB_JSON = "/db.json";
+const MOCKUP_IMG = "https://icon-library.com/images/not-found-icon/not-found-icon-18.jpg";
 
 const app = express();
 const port = 3000;
@@ -23,18 +24,6 @@ app.get("/", async (req, res) =>
   res.send(await items);
 });
 
-async function getInicialData()
-{
-  const listOfItems = JSON.parse(await fs.promises.readFile(__dirname + DB_JSON, "utf8"));
-
-  for (let item of listOfItems)
-  {
-    $("tbody").append(createNewRow(item));
-  }
-
-  return $.root().html();
-}
-
 
 app.post("/", async (req, res) =>
 {
@@ -46,18 +35,16 @@ app.post("/", async (req, res) =>
   if (req.body.action)
   {
     const jsonData = JSON.parse(await fs.promises.readFile(__dirname + DB_JSON, "utf8"));
-    let i;
-
-    for (i = 0; i < jsonData.length; i++)
+    let idxItem = jsonData.indexOf(JSON.parse(req.body.element));
+    console.log(JSON.parse(req.body.element));
+    console.log(jsonData[0]);
+    if (idxItem <= -1)
     {
-      if (JSON.stringify(jsonData[i]) === req.body.element)
-      {
-        jsonData.splice(i, 1);
-        break;
-      }
+      return;
     }
-
-    $($($("tbody")).children()[i]).remove();
+    // Removing item from array and virtual DOM.
+    jsonData.splice(idxItem, 1);
+    $($($("tbody")).children()[idxItem]).remove();
 
     await fs.promises.writeFile(__dirname + DB_JSON, JSON.stringify(jsonData));
   }
@@ -90,10 +77,23 @@ async function makeAPIRequestForImg(itemName)
 
   if (data.total == 0)
   {
-    return "https://icon-library.com/images/not-found-icon/not-found-icon-18.jpg";
+    return MOCKUP_IMG;
   }
 
   return await data.hits[0].previewURL;
+}
+
+
+async function getInicialData()
+{
+  const listOfItems = JSON.parse(await fs.promises.readFile(__dirname + DB_JSON, "utf8"));
+
+  for (let item of listOfItems)
+  {
+    $("tbody").append(createNewRow(item));
+  }
+
+  return $.root().html();
 }
 
 

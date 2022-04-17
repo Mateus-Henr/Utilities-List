@@ -1,7 +1,7 @@
 {
   "name": "houseutilities",
   "version": "1.0.0",
-  "description": "",
+  "description": "A simple list that allows the user to add items and remove items. Only works locally.",
   "main": "app.js",
   "scripts": {
     "start": "echo start"
@@ -14,5 +14,13 @@
     "cheerio": "^1.0.0-rc.10",
     "express": "^4.17.3",
     "request": "^2.88.2"
-  }
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Mateus-Henr/Utilities-List.git"
+  },
+  "bugs": {
+    "url": "https://github.com/Mateus-Henr/Utilities-List/issues"
+  },
+  "homepage": "https://github.com/Mateus-Henr/Utilities-List#readme"
 }
