@@ -1,16 +1,23 @@
-const SERVER_URL = "http://localhost:3000/";
-
 $(".deleteButton").click(deleteElement);
 
-function deleteElement(evt)
+
+async function deleteElement(evt)
 {
   var xhr = new XMLHttpRequest();
   const htmlCode = $(this).parent().parent().html();
 
-  xhr.open("POST", SERVER_URL, true);
+  xhr.onreadystatechange = () =>
+  {
+    if (xhr.readyState == 4 && xhr.status == 200)
+    {
+      setTimeout(() => window.location.href = window.location.href, 500);
+    }
+  };
+  xhr.open("POST", window.location.href, false);
   xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
   xhr.send(`action=delete&element=${transformToFormat(htmlCode)}`);
 }
+
 
 function transformToFormat(htmlCode)
 {

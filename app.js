@@ -32,41 +32,51 @@ app.post("/", async (req, res) =>
     await items;
   }
 
+  const jsonData = JSON.parse(await fs.promises.readFile(__dirname + DB_JSON, "utf8"));
+
   if (req.body.action)
   {
-    const jsonData = JSON.parse(await fs.promises.readFile(__dirname + DB_JSON, "utf8"));
-    let idxItem = jsonData.indexOf(JSON.parse(req.body.element));
-    console.log(JSON.parse(req.body.element));
-    console.log(jsonData[0]);
-    if (idxItem <= -1)
-    {
-      return;
-    }
-    // Removing item from array and virtual DOM.
-    jsonData.splice(idxItem, 1);
-    $($($("tbody")).children()[idxItem]).remove();
-
-    await fs.promises.writeFile(__dirname + DB_JSON, JSON.stringify(jsonData));
+    await deleteItem(jsonData, req.body.element);
   }
   else
   {
-    const newItem =
-    {
-      name: req.body.name,
-      imgURL: await makeAPIRequestForImg(req.body.name),
-      person: req.body.person,
-      status: req.body.status
-    }
-
-    $("tbody").append(createNewRow(newItem));
-
-    const jsonData = JSON.parse(await fs.promises.readFile(__dirname + DB_JSON, "utf8"));
-    jsonData.push(newItem);
-    await fs.promises.writeFile(__dirname + DB_JSON, JSON.stringify(jsonData));
+    await addItem(jsonData, req);
   }
 
   res.send($.root().html());
+
+  fs.writeFile(__dirname + DB_JSON, JSON.stringify(jsonData), () => {});
 });
+
+
+async function addItem(jsonData, req)
+{
+  const newItem =
+  {
+    name: req.body.name,
+    imgURL: await makeAPIRequestForImg(req.body.name),
+    person: req.body.person,
+    status: req.body.status
+  }
+
+  $("tbody").append(createNewRow(newItem));
+  await jsonData.push(newItem);
+}
+
+
+async function deleteItem(jsonData, reqJsonElement)
+{
+  let idxItem = jsonData.findIndex((element) => JSON.stringify(element).normalize() === JSON.stringify(JSON.parse(reqJsonElement)).normalize());
+
+  if (idxItem === -1)
+  {
+    return;
+  }
+
+  // Removing item from array and virtual DOM.
+  jsonData.splice(idxItem, 1);
+  await $($($("tbody")).children()[idxItem]).remove();
+}
 
 
 async function makeAPIRequestForImg(itemName)
