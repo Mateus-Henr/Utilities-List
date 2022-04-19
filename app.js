@@ -6,7 +6,8 @@ const cheerio = require("cheerio");
 
 const INDEX_HTML = "/index.html";
 const DB_JSON = "/db.json";
-const MOCKUP_IMG = "https://icon-library.com/images/not-found-icon/not-found-icon-18.jpg";
+const MOCKUP_IMG = "https://cdn.pixabay.com/photo/2016/04/24/22/30/monitor-1350918_960_720.png";
+const SET_OF_ITEMS = ".cards";
 
 const app = express();
 const port = 3000;
@@ -15,7 +16,7 @@ const $ = cheerio.load(fs.readFileSync(__dirname + INDEX_HTML));
 
 var items = getInicialData();
 
-app.use(express.static("public"));
+app.use(express.static(__dirname + "/public"));
 app.use(bodyParser.urlencoded({extended: true}));
 
 
@@ -31,6 +32,8 @@ app.post("/", async (req, res) =>
   {
     await items;
   }
+
+  console.log(req.body);
 
   const jsonData = JSON.parse(await fs.promises.readFile(__dirname + DB_JSON, "utf8"));
 
@@ -53,14 +56,23 @@ async function addItem(jsonData, req)
 {
   const newItem =
   {
-    name: req.body.name,
+    name: standardizeName(req.body.name),
     imgURL: await makeAPIRequestForImg(req.body.name),
     person: req.body.person,
     status: req.body.status
   }
 
-  $("tbody").append(createNewRow(newItem));
-  await jsonData.push(newItem);
+  let idxItem = jsonData.findIndex((element) => element.name.normalize() === newItem.name.normalize());
+
+  if (idxItem !== -1)
+  {
+    jsonData[idxItem].status = newItem.status;
+  }
+  else
+  {
+    $(SET_OF_ITEMS).append(createNewRow(newItem));
+    await jsonData.push(newItem);
+  }
 }
 
 
@@ -75,7 +87,7 @@ async function deleteItem(jsonData, reqJsonElement)
 
   // Removing item from array and virtual DOM.
   jsonData.splice(idxItem, 1);
-  await $($($("tbody")).children()[idxItem]).remove();
+  await $($($(SET_OF_ITEMS)).children()[idxItem]).remove();
 }
 
 
@@ -85,7 +97,7 @@ async function makeAPIRequestForImg(itemName)
 
   const {data} = await axios.get(IMG_URL);
 
-  if (data.total == 0)
+  if (data.total === 0)
   {
     return MOCKUP_IMG;
   }
@@ -100,7 +112,7 @@ async function getInicialData()
 
   for (let item of listOfItems)
   {
-    $("tbody").append(createNewRow(item));
+    $(SET_OF_ITEMS).append(createNewRow(item));
   }
 
   return $.root().html();
@@ -109,13 +121,32 @@ async function getInicialData()
 
 function createNewRow(itemData)
 {
-  return `<tr>
-            <th scope="row"><img class="utility-img" src="${itemData.imgURL}"></th>
-            <td class="itemName">${itemData.name}</td>
-            <td class="itemPerson">${itemData.person}</td>
-            <td class="itemStatus"><input type="checkbox" ${itemData.status}></td>
-            <td><button class="deleteButton">Delete</button></td>
-          </tr>`;
+  return `<div class="col">
+            <div class="card h-100">
+              <img src="${itemData.imgURL}" class="card-img-top itemImg img-responsive" alt="urlIMG">
+              <div class="card-body">
+                <h5 class="card-title itemName">${itemData.name}</h5>
+                <p class="card-text itemPerson">${itemData.person}</p>
+                <p><button class="btn btn-primary deleteButton">Delete</button></p>
+                <div class="card-footer">
+                  <small class="text-muted">Status <input type="checkbox" ${itemData.status} onClick="return false;"></small>
+                </div>
+              </div>
+            </div>
+          </div>`;
+  // return `<tr>
+  //           <th scope="row"><img class="utility-img" src="${itemData.imgURL}"></th>
+  //           <td class="itemName">${itemData.name}</td>
+  //           <td class="itemPerson">${itemData.person}</td>
+  //           <td class="itemStatus"><input type="checkbox" ${itemData.status}></td>
+  //           <td><button class="deleteButton">Delete</button></td>
+  //         </tr>`;
+}
+
+
+function standardizeName(itemName)
+{
+  return itemName.charAt(0).toUpperCase() + itemName.substr(1, itemName.length).toLowerCase();
 }
 
 

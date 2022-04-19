@@ -1,6 +1,6 @@
 body
 {
-  background-color: grey;
+  background-color: #00ADB5;
   text-align: center;
 }
 
@@ -13,11 +13,11 @@ body
   padding: 10px;
 }
 
-.utility-img
+.itemImg
 {
-  border-radius: 10%;
-  width: 400px;
-  height: 180px;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
 }
 
 .add-item-form
@@ -25,24 +25,13 @@ body
   margin: 1.5rem auto 5rem auto;
 }
 
-.radio-group
+.card
 {
-
+  background-color: #222831;
+  color: #EEEEEE;
 }
 
-td
+.row
 {
-  font-size: 30px;
-  vertical-align: middle;
-}
-
-td input
-{
-  width: 30px;
-  height: 30px;
-}
-
-table
-{
-  padding: 10%;
+  margin-bottom: 10px;
 }

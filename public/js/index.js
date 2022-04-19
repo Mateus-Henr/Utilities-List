@@ -1,16 +1,16 @@
 $(".deleteButton").click(deleteElement);
 
 
-async function deleteElement(evt)
+function deleteElement(evt)
 {
-  var xhr = new XMLHttpRequest();
-  const htmlCode = $(this).parent().parent().html();
+  const xhr = new XMLHttpRequest();
+  const htmlCode = $(this).parent().parent().parent().parent().html();
 
   xhr.onreadystatechange = () =>
   {
     if (xhr.readyState == 4 && xhr.status == 200)
     {
-      setTimeout(() => window.location.href = window.location.href, 500);
+      setTimeout(() => window.location.href = window.location.href, 1000);
     }
   };
   xhr.open("POST", window.location.href, false);
@@ -21,14 +21,15 @@ async function deleteElement(evt)
 
 function transformToFormat(htmlCode)
 {
-  const code = $.parseHTML(htmlCode);
+  const $code = $(htmlCode);
+  console.log($($code).html());
 
   const item =
   {
-    name: $(code).filter(".itemName").text(),
-    imgURL: $($($(code).filter("th")[0]).html()).prop("src"),
-    person: $(code).filter(".itemPerson").text(),
-    status: $(code).filter(".itemStatus").text()
+    name: $code.find(".itemName").text(),
+    imgURL: $code.find(".itemImg").prop("src"),
+    person: $code.find(".itemPerson").text(),
+    status: $code.find(".itemStatus").text()
   }
 
   return JSON.stringify(item);
