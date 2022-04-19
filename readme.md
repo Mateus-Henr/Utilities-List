@@ -12,12 +12,13 @@ By default the app will start at "http://localhost:3000".
 ```
 npm init
 npm i express body-parser axios cheerio
+npm install -g nodemon
 ```
 
 ### Usage
 
 ```
-node app.js
+nodemon app.js
 ```
 
 ## License
