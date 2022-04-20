@@ -21,16 +21,16 @@
             <div class="col-lg-2 col-md-4">
               <label class="sr-only" for="name">Name</label>
               <input type="text" class="form-control mb-2" name="name" placeholder="Potato" required>
-              <div class="form-text">In order to set an item as "checked", you have to write the item's name again, but checking the option.</div>
+              <div class="form-text">In order to set an item as "checked", you have to write the item's name again, but checking the option. The same thing for the name.</div>
             </div>
           </div>
 
           <div class="row justify-content-center">
             <div class="col-lg-1 col-md-2 align-self-center">
-              <label class="visually-hidden" for="autoSizingSelect">Preference</label>
-              <select class="form-select">
-                <option selected hidden>Choose...</option>
-                <option value="João" selected>João</option>
+              <label class="visually-hidden" for="person">Preference</label>
+              <select class="form-select" name="person">
+                <option value="Undefined" selected>Undefined</option>
+                <option value="João">João</option>
                 <option value="Vitor">Vitor</option>
                 <option value="Mateus">Mateus</option>
               </select>
@@ -66,19 +66,6 @@
     <div class="row row-cols-1 row-cols-md-6 g-4 cards">
     </div>
 
-    <!-- <table class="table table-borderless table-dark table-hover border">
-      <thead>
-        <tr>
-          <th class="col-lg-2" scope="col">Image</th>
-          <th class="col-lg-1" scope="col">Name</th>
-          <th class="col-lg-1" scope="col">Person</th>
-          <th class="col-lg-1" scope="col">Status</th>
-          <th class="col-lg-1" scope="col">Delete</th>
-        </tr>
-      </thead>
-      <tbody class="rowsData">
-      </tbody>
-    </table> -->
   </div>
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
   <script src="/js/index.js" charset="utf-8"></script>

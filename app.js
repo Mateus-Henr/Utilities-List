@@ -33,8 +33,6 @@ app.post("/", async (req, res) =>
     await items;
   }
 
-  console.log(req.body);
-
   const jsonData = JSON.parse(await fs.promises.readFile(__dirname + DB_JSON, "utf8"));
 
   if (req.body.action)
@@ -66,6 +64,7 @@ async function addItem(jsonData, req)
 
   if (idxItem !== -1)
   {
+    jsonData[idxItem].person = newItem.person;
     jsonData[idxItem].status = newItem.status;
   }
   else
@@ -85,7 +84,6 @@ async function deleteItem(jsonData, reqJsonElement)
     return;
   }
 
-  // Removing item from array and virtual DOM.
   jsonData.splice(idxItem, 1);
   await $($($(SET_OF_ITEMS)).children()[idxItem]).remove();
 }
@@ -93,7 +91,7 @@ async function deleteItem(jsonData, reqJsonElement)
 
 async function makeAPIRequestForImg(itemName)
 {
-  const IMG_URL = `https://pixabay.com/api/?key=26716436-4977a45d463ec155d02d2729e&safesearch=true&image_type=photo&per_page=3&q=${itemName}`;
+  const IMG_URL = `https://pixabay.com/api/?key=26716436-4977a45d463ec155d02d2729e&safesearch=true&per_page=3&q=${itemName}`;
 
   const {data} = await axios.get(IMG_URL);
 
@@ -134,13 +132,6 @@ function createNewRow(itemData)
               </div>
             </div>
           </div>`;
-  // return `<tr>
-  //           <th scope="row"><img class="utility-img" src="${itemData.imgURL}"></th>
-  //           <td class="itemName">${itemData.name}</td>
-  //           <td class="itemPerson">${itemData.person}</td>
-  //           <td class="itemStatus"><input type="checkbox" ${itemData.status}></td>
-  //           <td><button class="deleteButton">Delete</button></td>
-  //         </tr>`;
 }
 
 

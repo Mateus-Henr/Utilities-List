@@ -22,7 +22,6 @@ function deleteElement(evt)
 function transformToFormat(htmlCode)
 {
   const $code = $(htmlCode);
-  console.log($($code).html());
 
   const item =
   {
