@@ -125,7 +125,7 @@ function createNewRow(itemData)
               <div class="card-body">
                 <h5 class="card-title itemName">${itemData.name}</h5>
                 <p class="card-text itemPerson">${itemData.person}</p>
-                <p><button class="btn btn-primary deleteButton">Delete</button></p>
+                <p><button class="btn btn-danger deleteButton">Delete</button></p>
                 <div class="card-footer">
                   <small class="text-muted">Status <input type="checkbox" ${itemData.status} onClick="return false;"></small>
                 </div>
