@@ -23,9 +23,12 @@ function transformToFormat(htmlCode)
 {
   const $code = $(htmlCode);
 
+  console.log($code.html());
+
   const item =
   {
     name: $code.find(".itemName").text(),
+    section: $code.find(".itemSection").text(),
     imgURL: $code.find(".itemImg").prop("src"),
     person: $code.find(".itemPerson").text(),
     status: $code.find(".itemStatus").text()
