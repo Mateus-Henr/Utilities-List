@@ -20,6 +20,17 @@ body
   object-fit: fill;
 }
 
+.display-2
+{
+  margin-left: 10vh;
+  text-align: left;
+}
+
+.displayMarginTop
+{
+  margin-top: 10vh;
+}
+
 .add-item-form
 {
   margin: 1.5rem auto 5rem auto;

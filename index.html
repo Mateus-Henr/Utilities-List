@@ -34,6 +34,14 @@
           </div>
 
           <div class="row justify-content-center">
+            <div class="col-lg-3 col-md-4">
+              <label class="sr-only" for="inputURL">Img URL</label>
+              <input type="text" class="form-control mb-2" name="inputURL" placeholder="https://live.staticflickr.com/4905/31906224088_e31bc9c142_n.jpg">
+              <div class="form-text">In case you want to get a specific URL.</div>
+            </div>
+          </div>
+
+          <div class="row justify-content-center">
             <div class="col-lg-1 col-md-2 align-self-center">
               <label class="visually-hidden" for="person">Preference</label>
               <select class="form-select" name="person">
@@ -83,23 +91,26 @@
       </form>
     </div>
 
-    <h1 class="display-2">Kitchen</h1>
-    <div class="row row-cols-1 row-cols-md-6 g-4 Kitchen-cards">
-    </div>
+    <div class="row">
+      <h1 class="display-2">Kitchen</h1>
+      <div class="row g-4 Kitchen-cards">
+      </div>
 
-    <h1 class="display-2">Toilet</h1>
-    <div class="row row-cols-1 row-cols-md-6 g-4 Toilet-cards">
-    </div>
+      <h1 class="display-2 displayMarginTop">Toilet</h1>
+      <div class="row g-4 Toilet-cards">
+      </div>
 
-    <h1 class="display-2">Outside</h1>
-    <div class="row row-cols-1 row-cols-md-6 g-4 Outside-cards">
-    </div>
+      <h1 class="display-2 displayMarginTop">Outside</h1>
+      <div class="row g-4 Outside-cards">
+      </div>
 
-    <h1 class="display-2">Food</h1>
-    <div class="row row-cols-1 row-cols-md-6 g-4 Food-cards">
+      <h1 class="display-2 displayMarginTop">Food</h1>
+      <div class="row g-4 Food-cards">
+      </div>
     </div>
 
   </div>
+
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
   <script src="/js/index.js" charset="utf-8"></script>
 </body>

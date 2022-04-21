@@ -59,7 +59,7 @@ async function addItem(jsonData, req)
   {
     name: standardizeName(req.body.name),
     section: req.body.section,
-    imgURL: await makeAPIRequestForImg(req.body.name, req.body.numberPic),
+    imgURL: undefined,
     person: req.body.person,
     status: req.body.status
   }
@@ -68,6 +68,19 @@ async function addItem(jsonData, req)
 
   if (idxItem !== -1)
   {
+    if (req.body.inputURL)
+    {
+      newItem.imgURL = req.body.inputURL;
+    }
+    else if (req.body.numberPic === 0)
+    {
+      newItem.imgURL = jsonData[idxItem].imgURL;
+    }
+    else
+    {
+      newItem.imgURL = await makeAPIRequestForImg(req.body.name, req.body.numberPic);
+    }
+
     $(ID + getItemID(jsonData[idxItem])).replaceWith(createNewCard(newItem));
     jsonData[idxItem] = JSON.parse(JSON.stringify(newItem));
   }
@@ -123,7 +136,7 @@ async function getInicialData()
 
 function createNewCard(itemData)
 {
-  return `<div class="col" id="${getItemID(itemData)}">
+  return `<div class="col-lg-2" id="${getItemID(itemData)}">
             <div class="card h-100">
               <img src="${itemData.imgURL}" class="card-img-top itemImg img-responsive" alt="urlIMG">
               <div class="card-body">
