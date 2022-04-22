@@ -86,6 +86,15 @@ async function addItem(jsonData, req)
   }
   else
   {
+    if (req.body.inputURL)
+    {
+      newItem.imgURL = req.body.inputURL;
+    }
+    else
+    {
+      newItem.imgURL = await makeAPIRequestForImg(req.body.name, req.body.numberPic);
+    }
+
     $(DOT + newItem.section + SET_OF_ITEM_POSFIX).append(createNewCard(newItem));
     jsonData.push(newItem);
   }
