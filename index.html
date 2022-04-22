@@ -4,7 +4,19 @@
 <head>
   <meta charset="utf-8">
   <title>House Utilities</title>
+
+  <!-- Favicon -->
+  <link rel="icon" href="https://img.icons8.com/external-wanicon-flat-wanicon/64/000000/external-list-work-at-home-wanicon-flat-wanicon.png">
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@700&display=swap" rel="stylesheet">
+
+  <!-- Bootstrap -->
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+
+  <!-- CSS files -->
   <link rel="stylesheet" href="/css/style.css">
 </head>
 
@@ -23,14 +35,14 @@
             <div class="col-lg-3 col-md-4 col-sm-10">
               <label class="form-label" for="name">Name</label>
               <input type="text" class="form-control mb-2" name="name" placeholder="Potato" required>
-              <div class="form-text">In order to set an item as "checked", you have to write the item's name again, but checking the option. The same thing for the name.</div>
+              <div class="form-text">In order to set an item as "checked", or change the person assigned to that item, you have to write the item's name again, selecting the new values as you will.</div>
             </div>
 
           </div>
 
-          <div class="row justify-content-center mb-4">
+          <div class="row justify-content-center">
 
-            <div class="col-lg-1 col-md-4 col-sm-4 align-self-center">
+            <div class="col-lg-1 col-md-4 col-sm-4 align-self-center mb-4">
               <label class="form-label" for="numberPic">Number</label>
               <div class="input-group mb-2">
                 <span class="input-group-text">0</span>
@@ -40,13 +52,14 @@
               <div class="form-text">Image position</div>
             </div>
 
-            <div class="col-lg-8 col-md-12 align-self-center">
+            <div class="col-lg-8 col-md-12 align-self-center mb-4">
               <label for="urlIMG" class="form-label">Image URL</label>
               <div class="input-group mb-2">
                 <span class="input-group-text">https://live.staticflickr.com/4905/31906224088_e31bc9c142_n.jpg</span>
                 <input type="text" class="form-control" name="urlIMG" aria-describedby="basic-addon3">
               </div>
-              <div class="form-text">If you want to set a specific image URL, set it here. <a href="https://www.flickr.com/">Flickr</a> is the API being used.</div>
+              <div class="form-text">If you want to set a specific image URL, set it here. <a href="https://www.flickr.com/">Flickr</a> is the image API being used. The standard size used by this website is given by the "_n" suffix in the URL (as in
+                the example).</div>
             </div>
 
           </div>
@@ -80,15 +93,15 @@
 
             <div class="col-lg-1 col-sm-2">
               <div class="form-check form-check-inline">
-                <input class="form-check-input" type="radio" name="status" value="" checked>
-                <label class="form-check-label" for="inlineCheckbox1">Not acquired</label>
+                <input class="form-check-input" type="radio" name="status" value="" id="uncheckedStatus" checked>
+                <label class="form-check-label" for="uncheckedStatus">Not acquired</label>
               </div>
             </div>
 
             <div class="col-lg-1 col-sm-2">
               <div class="form-check form-check-inline">
-                <input class="form-check-input" type="radio" name="status" value="checked">
-                <label class="form-check-label" for="inlineCheckbox2">Acquired</label>
+                <input class="form-check-input" type="radio" name="status" value="checked" id="checkedStatus">
+                <label class="form-check-label" for="checkedStatus">Acquired</label>
               </div>
             </div>
 
@@ -115,19 +128,19 @@
       </section>
 
       <section class="toilet">
-        <h1 class="display-2 display-margin-top">Toilet</h1>
+        <h1 class="display-2 section-separation">Toilet</h1>
         <div class="row g-4 Toilet-cards">
         </div>
       </section>
 
       <section class="outside">
-        <h1 class="display-2 display-margin-top">Outside</h1>
+        <h1 class="display-2 section-separation">Outside</h1>
         <div class="row g-4 Outside-cards">
         </div>
       </section>
 
       <section class="food">
-        <h1 class="display-2 display-margin-top">Food</h1>
+        <h1 class="display-2 section-separation">Food</h1>
         <div class="row g-4 Food-cards">
         </div>
       </section>

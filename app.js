@@ -193,11 +193,13 @@ function createNewCard(itemData)
               <div class="card-body">
                 <h5 class="card-title item-name">${itemData.name}</h5>
                 <p class="card-text item-person">${itemData.person}</p>
-                <p><button class="btn btn-danger deleteButton">Delete</button></p>
-                <div class="card-footer">
-                  <small class="text-muted item-section">${itemData.section}</small><br>
-                  <small class="text-muted item-status">Status <input type="checkbox" ${itemData.status} onclick="return false;"></small>
-                </div>
+              </div>
+              <ul class="list-group list-group-flush">
+                <li class="text-muted list-group-item">Status<br><input type="checkbox" ${itemData.status} onclick="return false;"></li>
+                <li class="text-muted item-section">${itemData.section}</li>
+              </ul>
+              <div class="card-footer">
+                <small><button class="btn btn-danger deleteButton">Delete</button></small>
               </div>
             </div>
           </div>`;

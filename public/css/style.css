@@ -18,10 +18,10 @@ body
 
 .head-title
 {
-  font-family: monospace;
+  font-family: 'Cinzel', serif;
   font-size: 100px;
   font-weight: bold;
-  margin-bottom: 100px;
+  margin-bottom: 5vh;
   padding: 10px;
 }
 
@@ -30,10 +30,37 @@ body
   margin: 1.5rem auto 5rem auto;
 }
 
+.display-2
+{
+  line-height: 1.5;
+  margin-bottom: 3vh;
+}
+
+.section-separation
+{
+  margin-top: 8vh;
+}
+
 .card
 {
   background-color: #222831;
   color: #EEEEEE;
+}
+
+.card-body
+{
+  background-color: #393E46;
+}
+
+.card ul li
+{
+  background-color: #222831;
+  color: #EEEEEE;
+}
+
+.card-title
+{
+  line-height: 1.5;
 }
 
 
