@@ -71,15 +71,15 @@ async function addItem(req)
 
       if (req.body.inputURL)
       {
-        editedItem.imgURL = req.body.inputURL;
+        editedItem.$set.imgURL = req.body.inputURL;
       }
       else if (req.body.numberPic === 0)
       {
-        editedItem.imgURL = foundItem.imgURL;
+        editedItem.$set.imgURL = foundItem.imgURL;
       }
       else
       {
-        editedItem.imgURL = await makeAPIRequestForImg(req.body.name, req.body.numberPic);
+        editedItem.$set.imgURL = await makeAPIRequestForImg(req.body.name, req.body.numberPic);
       }
 
       await utilities.updateOne(query, editedItem);
