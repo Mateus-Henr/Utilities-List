@@ -27,11 +27,11 @@ function transformToFormat(htmlCode)
 
   const item =
   {
-    name: $code.find(".itemName").text(),
-    section: $code.find(".itemSection").text(),
-    imgURL: $code.find(".itemImg").prop("src"),
-    person: $code.find(".itemPerson").text(),
-    status: $code.find(".itemStatus").text()
+    name: $code.find(".item-name").text(),
+    section: $code.find(".item-section").text(),
+    imgURL: $code.find(".item-img").prop("src"),
+    person: $code.find(".item-person").text(),
+    status: $code.find(".item-status").text()
   }
 
   return JSON.stringify(item);

@@ -8,18 +8,20 @@ const {MongoClient} = require('mongodb');
 const ROOT_FOLDER = "/public";
 const INDEX_HTML = "/index.html";
 const DB_JSON = "/db.json";
-const MOCKUP_IMG = "https://cdn.pixabay.com/photo/2016/04/24/22/30/monitor-1350918_960_720.png";
+const MOCKUP_IMG = "https://live.staticflickr.com/509/32122229311_1f43119009_n.jpg";
 const ID = "#";
 const DOT = ".";
 const SET_OF_ITEM_POSFIX = "-cards";
-const URI = process.env.MONGODB_URI;
+const URI = process.env.MONGODB_URI || "mongodb+srv://myuser:gWtVuLTyXENzxCOs@cluster0.czgi4.mongodb.net/Cluster0?retryWrites=true&w=majority";
 
 const client = new MongoClient(URI);
 const app = express();
 const port = 3000;
 
+
 app.use(express.static(__dirname + ROOT_FOLDER));
 app.use(bodyParser.urlencoded({extended: true}));
+
 
 app.get("/", async (req, res) =>
 {
@@ -112,9 +114,9 @@ async function addItem(req)
 }
 
 
-async function deleteItem(reqJsonElement)
+async function deleteItem(itemObject)
 {
-  const itemToBeRemoved = JSON.parse(reqJsonElement);
+  const itemToBeRemoved = JSON.parse(itemObject);
 
   try
   {
@@ -144,8 +146,8 @@ async function makeAPIRequestForImg(itemName, numberPic)
                   "per_page=100&" +
                   "api_key=4078ad7212fee5414207d899c8bb9b74&" +
                   "format=json&" +
-                  "nojsoncallback=1" +
-                  "&text=" + itemName;
+                  "nojsoncallback=1&" +
+                  "text=" + itemName;
 
   const {data} = await axios.get(API_URL);
 
@@ -185,16 +187,16 @@ async function getData()
 
 function createNewCard(itemData)
 {
-  return `<div class="col-lg-2">
+  return `<div class="col-lg-2 col-md-4 col-sm-6">
             <div class="card h-100">
-              <img src="${itemData.imgURL}" class="card-img-top itemImg img-responsive" alt="urlIMG">
+              <img src="${itemData.imgURL}" class="card-img-top img-fluid item-img" alt="urlIMG">
               <div class="card-body">
-                <h5 class="card-title itemName">${itemData.name}</h5>
-                <p class="card-text itemPerson">${itemData.person}</p>
+                <h5 class="card-title item-name">${itemData.name}</h5>
+                <p class="card-text item-person">${itemData.person}</p>
                 <p><button class="btn btn-danger deleteButton">Delete</button></p>
                 <div class="card-footer">
-                  <small class="text-muted itemSection">${itemData.section}</small><br>
-                  <small class="text-muted">Status <input type="checkbox" ${itemData.status} onClick="return false;"></small>
+                  <small class="text-muted item-section">${itemData.section}</small><br>
+                  <small class="text-muted item-status">Status <input type="checkbox" ${itemData.status} onclick="return false;"></small>
                 </div>
               </div>
             </div>
@@ -204,7 +206,7 @@ function createNewCard(itemData)
 
 function standardizeName(itemName)
 {
-  spacelessName = itemName.replace(/\s+/g,' ').trim();
+  const spacelessName = itemName.replace(/\s+/g,' ').trim();
 
   return spacelessName.charAt(0).toUpperCase() + spacelessName.substr(1, itemName.length).toLowerCase();
 }

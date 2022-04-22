@@ -9,41 +9,52 @@
 </head>
 
 <body>
-  <h1 class="head-title">House Utilities</h1>
   <div class="container-fluid">
+    <h1 class="head-title">House Utilities</h1>
 
     <div class="row">
+
       <form action="/" class="add-item-form" method="post">
 
-        <div class="row justify-content-lg-center">
+        <div class="row justify-content-center">
 
-          <div class="row justify-content-center">
-            <div class="col-lg-2 col-md-4">
-              <label class="sr-only" for="name">Name</label>
+          <div class="row justify-content-center mb-4">
+
+            <div class="col-lg-3 col-md-4 col-sm-10">
+              <label class="form-label" for="name">Name</label>
               <input type="text" class="form-control mb-2" name="name" placeholder="Potato" required>
               <div class="form-text">In order to set an item as "checked", you have to write the item's name again, but checking the option. The same thing for the name.</div>
             </div>
+
           </div>
 
-          <div class="row justify-content-center">
-            <div class="col-lg-1">
-              <label class="sr-only" for="numberPic">Number</label>
-              <input type="number" oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);" class="form-control mb-2" name="numberPic" value="0" min="0" max="99" maxlength="2" required>
-              <div class="form-text">If the picture is not fitting your desires, you can change it by typing a number up to 99.</div>
+          <div class="row justify-content-center mb-4">
+
+            <div class="col-lg-1 col-md-4 col-sm-4 align-self-center">
+              <label class="form-label" for="numberPic">Number</label>
+              <div class="input-group mb-2">
+                <span class="input-group-text">0</span>
+                <input type="number" oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);" class="form-control" name="numberPic" value="0" min="0" max="99" maxlength="2" required>
+                <span class="input-group-text">99</span>
+              </div>
+              <div class="form-text">Image position</div>
             </div>
-          </div>
 
-          <div class="row justify-content-center">
-            <div class="col-lg-3 col-md-4">
-              <label class="sr-only" for="inputURL">Img URL</label>
-              <input type="text" class="form-control mb-2" name="inputURL" placeholder="https://live.staticflickr.com/4905/31906224088_e31bc9c142_n.jpg">
-              <div class="form-text">In case you want to get a specific URL.</div>
+            <div class="col-lg-8 col-md-12 align-self-center">
+              <label for="urlIMG" class="form-label">Image URL</label>
+              <div class="input-group mb-2">
+                <span class="input-group-text">https://live.staticflickr.com/4905/31906224088_e31bc9c142_n.jpg</span>
+                <input type="text" class="form-control" name="urlIMG" aria-describedby="basic-addon3">
+              </div>
+              <div class="form-text">If you want to set a specific image URL, set it here. <a href="https://www.flickr.com/">Flickr</a> is the API being used.</div>
             </div>
+
           </div>
 
-          <div class="row justify-content-center">
-            <div class="col-lg-1 col-md-2 align-self-center">
-              <label for="person">Person</label>
+          <div class="row justify-content-center mb-5">
+
+            <div class="col-lg-1 col-md-2">
+              <label for="person" class="form-label">Person</label>
               <select class="form-select" name="person">
                 <option value="Undefined" selected>Undefined</option>
                 <option value="João">João</option>
@@ -51,11 +62,9 @@
                 <option value="Mateus">Mateus</option>
               </select>
             </div>
-          </div>
 
-          <div class="row justify-content-center">
-            <div class="col-lg-1 col-md-2 align-self-center">
-              <label for="section">Section</label>
+            <div class="col-lg-1 col-md-2">
+              <label for="section" class="form-label">Section</label>
               <select class="form-select" name="section">
                 <option value="Kitchen" selected>Kitchen</option>
                 <option value="Toilet">Toilet</option>
@@ -65,48 +74,64 @@
             </div>
           </div>
 
-          <div class="row form-check justify-content-center">
-            <fieldset class="row justify-content-center">
-              <div class="col-lg-1">
-                <div class="form-check form-check-inline">
-                  <input class="form-check-input" type="radio" name="status" value="" checked>
-                  <label class="form-check-label" for="inlineCheckbox1">Not acquired</label>
-                </div>
+          <fieldset class="row justify-content-center mb-4">
+
+            <label for="status" class="form-label">Status</label>
+
+            <div class="col-lg-1 col-sm-2">
+              <div class="form-check form-check-inline">
+                <input class="form-check-input" type="radio" name="status" value="" checked>
+                <label class="form-check-label" for="inlineCheckbox1">Not acquired</label>
               </div>
-              <div class="col-lg-1">
-                <div class="form-check form-check-inline">
-                  <input class="form-check-input" type="radio" name="status" value="checked">
-                  <label class="form-check-label" for="inlineCheckbox2">Acquired</label>
-                </div>
+            </div>
+
+            <div class="col-lg-1 col-sm-2">
+              <div class="form-check form-check-inline">
+                <input class="form-check-input" type="radio" name="status" value="checked">
+                <label class="form-check-label" for="inlineCheckbox2">Acquired</label>
               </div>
-            </fieldset>
-          </div>
+            </div>
+
+          </fieldset>
 
           <div class="row justify-content-center">
-            <div class="col-lg-1 align-self-center">
+
+            <div class="col-lg-1">
               <button type="submit" class="btn btn-primary mb-2">Submit</button>
             </div>
           </div>
         </div>
+
       </form>
+
     </div>
 
-    <div class="row">
-      <h1 class="display-2">Kitchen</h1>
-      <div class="row g-4 Kitchen-cards">
-      </div>
+    <div class="row justify-content-center">
 
-      <h1 class="display-2 displayMarginTop">Toilet</h1>
-      <div class="row g-4 Toilet-cards">
-      </div>
+      <section class="kitchen">
+        <h1 class="display-2">Kitchen</h1>
+        <div class="row g-4 Kitchen-cards">
+        </div>
+      </section>
 
-      <h1 class="display-2 displayMarginTop">Outside</h1>
-      <div class="row g-4 Outside-cards">
-      </div>
+      <section class="toilet">
+        <h1 class="display-2 display-margin-top">Toilet</h1>
+        <div class="row g-4 Toilet-cards">
+        </div>
+      </section>
 
-      <h1 class="display-2 displayMarginTop">Food</h1>
-      <div class="row g-4 Food-cards">
-      </div>
+      <section class="outside">
+        <h1 class="display-2 display-margin-top">Outside</h1>
+        <div class="row g-4 Outside-cards">
+        </div>
+      </section>
+
+      <section class="food">
+        <h1 class="display-2 display-margin-top">Food</h1>
+        <div class="row g-4 Food-cards">
+        </div>
+      </section>
+
     </div>
 
   </div>

@@ -1,7 +1,19 @@
+*
+{
+  margin: 0;
+  overflow-x: hidden;
+}
+
 body
 {
   background-color: #00ADB5;
   text-align: center;
+}
+
+.container-fluid
+{
+  max-width:100%;
+  width: 100%;
 }
 
 .head-title
@@ -11,24 +23,6 @@ body
   font-weight: bold;
   margin-bottom: 100px;
   padding: 10px;
-}
-
-.itemImg
-{
-  width: 100%;
-  height: 30vh;
-  object-fit: fill;
-}
-
-.display-2
-{
-  margin-left: 10vh;
-  text-align: left;
-}
-
-.displayMarginTop
-{
-  margin-top: 10vh;
 }
 
 .add-item-form
@@ -42,7 +36,44 @@ body
   color: #EEEEEE;
 }
 
-.row
+
+.card-img-top
 {
-  margin-bottom: 10px;
+    object-fit: fill;
+}
+
+/* Small devices (landscape phones, 576px and up) */
+@media (min-width: 576px)
+{
+  .card-img-top
+  {
+    height: 20vw;
+  }
+}
+
+/* Medium devices (tablets, 768px and up) */
+@media (min-width: 768px)
+{
+  .card-img-top
+  {
+    height: 16vw;
+  }
+}
+
+/* Large devices (desktops, 992px and up) */
+@media (min-width: 992px)
+{
+  .card-img-top
+  {
+    height: 11vw;
+  }
+}
+
+/* Extra large devices (large desktops, 1200px and up) */
+@media (min-width: 992px)
+{
+  .card-img-top
+  {
+    height: 11vw;
+  }
 }
