@@ -3,6 +3,7 @@ const bodyParser = require("body-parser");
 const axios = require("axios");
 const fs = require("fs");
 const cheerio = require("cheerio");
+const {MongoClient} = require('mongodb');
 
 const ROOT_FOLDER = "/public";
 const INDEX_HTML = "/index.html";
@@ -11,113 +12,139 @@ const MOCKUP_IMG = "https://cdn.pixabay.com/photo/2016/04/24/22/30/monitor-13509
 const ID = "#";
 const DOT = ".";
 const SET_OF_ITEM_POSFIX = "-cards";
+const URI = "mongodb+srv://myuser:gWtVuLTyXENzxCOs@cluster0.czgi4.mongodb.net/Cluster0?retryWrites=true&w=majority";
 
+const client = new MongoClient(URI);
 const app = express();
 const port = 3000;
-
-const $ = cheerio.load(fs.readFileSync(__dirname + INDEX_HTML));
-
-var items = getInicialData();
 
 app.use(express.static(__dirname + ROOT_FOLDER));
 app.use(bodyParser.urlencoded({extended: true}));
 
-
 app.get("/", async (req, res) =>
 {
-  res.send(await items);
+  res.send(await getData());
 });
 
 
 app.post("/", async (req, res) =>
 {
-  if (!items)
-  {
-    await items;
-  }
-
-  const jsonData = JSON.parse(await fs.promises.readFile(__dirname + DB_JSON, "utf8"));
-
   if (req.body.action)
   {
-    deleteItem(jsonData, req.body.element);
+    await deleteItem(req.body.element);
   }
   else
   {
-    await addItem(jsonData, req);
+    await addItem(req);
   }
 
-  res.send($.root().html());
-
-  fs.writeFile(__dirname + DB_JSON, JSON.stringify(jsonData), () => {});
+  res.send(await getData());
 });
 
 
-async function addItem(jsonData, req)
+async function addItem(req)
 {
-  const newItem =
+  try
   {
-    name: standardizeName(req.body.name),
-    section: req.body.section,
-    imgURL: undefined,
-    person: req.body.person,
-    status: req.body.status
-  }
+    await client.connect();
 
-  let idxItem = findItemIdx(jsonData, newItem);
+    const database = client.db("listOfUtilities");
+    const utilities = database.collection("utilities");
 
-  if (idxItem !== -1)
-  {
-    if (req.body.inputURL)
+    const query = {name: req.body.name, section: req.body.section};
+
+    const foundItem = await utilities.findOne(query);
+
+    if (foundItem)
     {
-      newItem.imgURL = req.body.inputURL;
-    }
-    else if (req.body.numberPic === 0)
-    {
-      newItem.imgURL = jsonData[idxItem].imgURL;
+      const editedItem =
+      {
+        $set:
+        {
+          imgURL: undefined,
+          person: req.body.person,
+          status: req.body.status
+        }
+      }
+
+      if (req.body.inputURL)
+      {
+        editedItem.imgURL = req.body.inputURL;
+      }
+      else if (req.body.numberPic === 0)
+      {
+        editedItem.imgURL = foundItem.imgURL;
+      }
+      else
+      {
+        editedItem.imgURL = await makeAPIRequestForImg(req.body.name, req.body.numberPic);
+      }
+
+      await utilities.updateOne(query, editedItem);
     }
     else
     {
-      newItem.imgURL = await makeAPIRequestForImg(req.body.name, req.body.numberPic);
-    }
+      const newItem =
+      {
+        name: standardizeName(req.body.name),
+        section: req.body.section,
+        imgURL: undefined,
+        person: req.body.person,
+        status: req.body.status
+      }
 
-    $(ID + getItemID(jsonData[idxItem])).replaceWith(createNewCard(newItem));
-    jsonData[idxItem] = JSON.parse(JSON.stringify(newItem));
+      if (req.body.inputURL)
+      {
+        newItem.imgURL = req.body.inputURL;
+      }
+      else
+      {
+        newItem.imgURL = await makeAPIRequestForImg(req.body.name, req.body.numberPic);
+      }
+
+      await utilities.insertOne(newItem);
+    }
   }
-  else
+  finally
   {
-    if (req.body.inputURL)
-    {
-      newItem.imgURL = req.body.inputURL;
-    }
-    else
-    {
-      newItem.imgURL = await makeAPIRequestForImg(req.body.name, req.body.numberPic);
-    }
-
-    $(DOT + newItem.section + SET_OF_ITEM_POSFIX).append(createNewCard(newItem));
-    jsonData.push(newItem);
+    await client.close();
   }
 }
 
 
-function deleteItem(jsonData, reqJsonElement)
+async function deleteItem(reqJsonElement)
 {
-  let idxItem = findItemIdx(jsonData, JSON.parse(reqJsonElement));
+  const itemToBeRemoved = JSON.parse(reqJsonElement);
 
-  if (idxItem === -1)
+  try
   {
-    return;
-  }
+    await client.connect();
+    const database = client.db("listOfUtilities");
+    const utilities = database.collection("utilities");
 
-  $(getItemID(jsonData[idxItem])).remove();
-  jsonData.splice(idxItem, 1);
+    const query = {name: itemToBeRemoved.name, section: itemToBeRemoved.section};
+
+    await utilities.deleteOne(query);
+  }
+  finally
+  {
+    await client.close();
+  }
 }
 
 
 async function makeAPIRequestForImg(itemName, numberPic)
 {
-  const API_URL = `https://www.flickr.com/services/rest/?method=flickr.photos.search&content_type=1&sort=relevance&safe_search=1&per_page=100&api_key=4078ad7212fee5414207d899c8bb9b74&format=json&nojsoncallback=1&text=${itemName}`;
+  const API_URL = "https://www.flickr.com/services/rest/?" +
+                  "method=flickr.photos.search&" +
+                  "content_type=1&" +
+                  "sort=relevance&" +
+                  "safe_search=1&" +
+                  "per_page=100&" +
+                  "api_key=4078ad7212fee5414207d899c8bb9b74&" +
+                  "format=json&" +
+                  "nojsoncallback=1" +
+                  "&text=" + itemName;
 
   const {data} = await axios.get(API_URL);
 
@@ -126,17 +153,29 @@ async function makeAPIRequestForImg(itemName, numberPic)
     return MOCKUP_IMG;
   }
 
-  return `http://live.staticflickr.com/${data.photos.photo[numberPic].server}/${data.photos.photo[numberPic].id}_${data.photos.photo[numberPic].secret}_n.jpg`;
+  return "http://live.staticflickr.com/" +
+         data.photos.photo[numberPic].server + "/" +
+         data.photos.photo[numberPic].id + "_" + data.photos.photo[numberPic].secret + "_n.jpg";
 }
 
 
-async function getInicialData()
+async function getData()
 {
-  const listOfItems = JSON.parse(await fs.promises.readFile(__dirname + DB_JSON, "utf8"));
+  const $ = cheerio.load(fs.readFileSync(__dirname + INDEX_HTML));
 
-  for (let item of listOfItems)
+  try
   {
-    $(DOT + item.section + SET_OF_ITEM_POSFIX).append(createNewCard(item));
+    await client.connect();
+    const database = client.db("listOfUtilities");
+    const utilities = database.collection("utilities");
+
+    const listOfItems = await utilities.find();
+
+    await listOfItems.forEach((item) => $(DOT + item.section + SET_OF_ITEM_POSFIX).append(createNewCard(item)));
+  }
+  finally
+  {
+    await client.close();
   }
 
   return $.root().html();
@@ -164,16 +203,6 @@ function createNewCard(itemData)
 function getItemID(item)
 {
   return item.name + "-" + item.section;
-}
-
-
-function findItemIdx(jsonData, itemToLookFor)
-{
-  return jsonData.findIndex((element) =>
-          {
-            return  (JSON.stringify(element.name).normalize() === JSON.stringify(itemToLookFor.name).normalize()) &&
-                    (JSON.stringify(element.section).normalize() === JSON.stringify(itemToLookFor.section).normalize())
-          });
 }
 
 
