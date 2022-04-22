@@ -185,7 +185,7 @@ async function getData()
 
 function createNewCard(itemData)
 {
-  return `<div class="col-lg-2" id="${getItemID(itemData)}">
+  return `<div class="col-lg-2>
             <div class="card h-100">
               <img src="${itemData.imgURL}" class="card-img-top itemImg img-responsive" alt="urlIMG">
               <div class="card-body">
