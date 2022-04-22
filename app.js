@@ -12,7 +12,7 @@ const MOCKUP_IMG = "https://cdn.pixabay.com/photo/2016/04/24/22/30/monitor-13509
 const ID = "#";
 const DOT = ".";
 const SET_OF_ITEM_POSFIX = "-cards";
-const URI = "mongodb+srv://myuser:gWtVuLTyXENzxCOs@cluster0.czgi4.mongodb.net/Cluster0?retryWrites=true&w=majority";
+const URI = process.env.MONGODB_URI;
 
 const client = new MongoClient(URI);
 const app = express();
@@ -119,6 +119,7 @@ async function deleteItem(reqJsonElement)
   try
   {
     await client.connect();
+
     const database = client.db("listOfUtilities");
     const utilities = database.collection("utilities");
 
@@ -161,7 +162,7 @@ async function makeAPIRequestForImg(itemName, numberPic)
 
 async function getData()
 {
-  const $ = cheerio.load(fs.readFileSync(__dirname + INDEX_HTML));
+  const $ = await cheerio.load(fs.readFileSync(__dirname + INDEX_HTML));
 
   try
   {
@@ -198,11 +199,6 @@ function createNewCard(itemData)
               </div>
             </div>
           </div>`;
-}
-
-function getItemID(item)
-{
-  return item.name + "-" + item.section;
 }
 
 
