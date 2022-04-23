@@ -7,7 +7,7 @@ const {MongoClient} = require('mongodb');
 
 const ROOT_FOLDER = "/public";
 const INDEX_HTML = "/index.html";
-const DB_JSON = "/db.json";
+const BACKUP_JSON = "/backup.json";
 const MOCKUP_IMG = "https://live.staticflickr.com/509/32122229311_1f43119009_n.jpg";
 const ID = "#";
 const DOT = ".";
@@ -173,8 +173,15 @@ async function getData()
     const utilities = database.collection("utilities");
 
     const listOfItems = await utilities.find();
+    const itemsToBackup = [];
 
-    await listOfItems.forEach((item) => $(DOT + item.section + SET_OF_ITEM_POSFIX).append(createNewCard(item)));
+    await listOfItems.forEach((item) =>
+    {
+      $(DOT + item.section + SET_OF_ITEM_POSFIX).append(createNewCard(item));
+      itemsToBackup.push(item);
+    });
+
+    fs.writeFile(__dirname + BACKUP_JSON, JSON.stringify(itemsToBackup), () => {});
   }
   finally
   {
