@@ -115,9 +115,6 @@ async function addItem(reqData)
   {
     await client.close();
   }
-
-  // Writing data on backup file.
-  fs.writeFile(__dirname + BACKUP_JSON, JSON.stringify(unorganizedListOfItems), () => {});
 }
 
 
