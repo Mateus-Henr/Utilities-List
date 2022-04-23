@@ -10,7 +10,7 @@ function deleteElement(evt)
   {
     if (xhr.readyState == 4 && xhr.status == 200)
     {
-      setTimeout(() => window.location.href = window.location.href, 1000);
+      window.location.href = window.location.href;
     }
   };
   xhr.open("POST", window.location.href, false);
