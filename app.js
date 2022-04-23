@@ -69,11 +69,11 @@ async function addItem(req)
         }
       }
 
-      if (req.body.inputURL !== undefined && req.body.inputURL !== "")
+      if (req.body.inputURL != undefined && req.body.inputURL != '' && req.body.inputURL != "")
       {
         editedItem.$set.imgURL = req.body.inputURL;
       }
-      else if (req.body.numberPic === 0)
+      else if (req.body.numberPic == 0)
       {
         editedItem.$set.imgURL = foundItem.imgURL;
       }
@@ -95,7 +95,7 @@ async function addItem(req)
         status: req.body.status
       }
 
-      if (req.body.inputURL !== undefined && req.body.inputURL !== "")
+      if (req.body.inputURL != undefined && req.body.inputURL !== '' && req.body.inputURL != "")
       {
         newItem.imgURL = req.body.inputURL;
       }
