@@ -69,7 +69,7 @@ async function addItem(req)
         }
       }
 
-      if (req.body.inputURL !== undefined || req.body.inputURL !== "")
+      if (req.body.inputURL !== undefined && req.body.inputURL !== "")
       {
         editedItem.$set.imgURL = req.body.inputURL;
       }
@@ -95,7 +95,7 @@ async function addItem(req)
         status: req.body.status
       }
 
-      if (req.body.inputURL != undefined | req.body.inputURL != "")
+      if (req.body.inputURL !== undefined && req.body.inputURL !== "")
       {
         newItem.imgURL = req.body.inputURL;
       }
