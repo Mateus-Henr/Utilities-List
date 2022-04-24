@@ -169,13 +169,13 @@ async function makeAPIRequestForImg(itemName, numberPic)
 async function getInitialData()
 {
   const unorganizedListOfItems = await getAllItems();
+
+  unorganizedListOfItems.sort((a, b) => a.person.localeCompare(b.person))
+
   const organizedListOfItems = [
                                 ...unorganizedListOfItems.filter(({status}) => status === CHECKED_STATUS),
                                 ...unorganizedListOfItems.filter(({status}) => status !== CHECKED_STATUS)
                                ];
-
-  // Sorting list by person's name.
-  organizedListOfItems.sort((a, b) => a.person.localeCompare(b.person));
 
   // Adding items to the virtual DOM.
   await organizedListOfItems.forEach((item) => $(`.${item.section}${SET_OF_SECTION_POSFIX}`).append(createNewCard(item)));
