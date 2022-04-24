@@ -69,40 +69,18 @@ input[type=radio]
   line-height: 1.5;
 }
 
-
 .card-img-top
 {
     object-fit: fill;
 }
 
-/* Small devices (landscape phones, 576px and up) */
-@media (min-width: 576px)
-{
-  .card-img-top
-  {
-    height: 20vw;
-  }
-
-  /* .form-control,
-  .form-select
-  {
-    height: 50px;
-  } */
-}
-
 /* Medium devices (tablets, 768px and up) */
-@media (min-width: 768px)
+@media (min-width: 576px) and (max-width: 991px)
 {
   .card-img-top
   {
     height: 20vw;
   }
-
-  /* .form-control,
-  .form-select
-  {
-    height: 50px;
-  } */
 }
 
 /* Large devices (desktops, 992px and up) */
@@ -110,33 +88,26 @@ input[type=radio]
 {
   .card-img-top
   {
-    height: 11vw;
+    height: 12vw;
   }
 }
 
-/* Extra large devices (large desktops, 1200px and up) */
-@media (min-width: 992px)
+@media (max-width: 767)
 {
-  .card-img-top
-  {
-    height: 11vw;
-  }
+    label { font-size: 14px; }
 }
 
-@media (max-width: 767) {
-    /* your custom css class on a parent will increase specificity */
-    /* so this rule will override Bootstrap's font size setting */
-    .autosized .label { font-size: 14px; }
+@media (min-width: 768px) and (max-width: 991px)
+{
+    label { font-size: 16px; }
 }
 
-@media (min-width: 768px) and (max-width: 991px) {
-    .autosized .label { font-size: 16px; }
+@media (min-width: 992px) and (max-width: 1199px)
+{
+    label { font-size: 18px; }
 }
 
-@media (min-width: 992px) and (max-width: 1199px) {
-    .autosized .label { font-size: 18px; }
-}
-
-@media (min-width: 1200px) {
-    .autosized .label { font-size: 20px; }
+@media (min-width: 1200px)
+{
+    label { font-size: 20px; }
 }
