@@ -170,10 +170,8 @@ async function getInitialData()
 {
   const unorganizedListOfItems = await getAllItems();
 
-  unorganizedListOfItems.sort((a, b) => a.person.localeCompare(b.person))
-
   const organizedListOfItems = [
-                                ...unorganizedListOfItems.filter(({status}) => status === CHECKED_STATUS),
+                                ...unorganizedListOfItems.filter(({status}) => status === CHECKED_STATUS).sort((a, b) => a.person.localeCompare(b.person)),
                                 ...unorganizedListOfItems.filter(({status}) => status !== CHECKED_STATUS)
                                ];
 
