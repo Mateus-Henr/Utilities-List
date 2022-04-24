@@ -32,11 +32,12 @@
 
           <div class="row justify-content-center mb-4">
 
-            <div class="col-lg-3 col-md-4 col-sm-10">
+            <div class="col-lg-3 col-md-6 col-sm-10">
               <label class="form-label" for="name">Name</label>
-              <input type="text" class="form-control mb-2" name="name" placeholder="Potato" required>
-              <div class="form-text">In order to set an item's status, or change the person assigned to that item, you have to write the item's name again, selecting the new values as you will. In addition to that, when editing an item leave the
-                "image number" field as empty if you do not wish to change the item's image.</div>
+              <input type="text" class="form-control form-control-lg mb-2" name="name" placeholder="Potato" required>
+              <div class="form-text">To modify an item's person or status, write the item's name again, inputting the new values as you will.
+                In addition to that, when editing an item, by leaving the "image number" field 0, the image won't change.
+              </div>
             </div>
 
           </div>
@@ -47,7 +48,8 @@
               <label class="form-label" for="numberPic">Number</label>
               <div class="input-group mb-2">
                 <span class="input-group-text">0</span>
-                <input type="number" oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);" class="form-control" name="numberPic" value="0" min="0" max="99" maxlength="2" required>
+                <input type="number" oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);" class="form-control form-control-lg" name="numberPic" value="0" min="0" max="99" maxlength="2"
+                  required>
                 <span class="input-group-text">99</span>
               </div>
               <div class="form-text">Image position</div>
@@ -57,7 +59,7 @@
               <label for="urlIMG" class="form-label">Image URL (Optional)</label>
               <div class="input-group mb-2">
                 <span class="input-group-text">https://live.staticflickr.com/4905/31906224088_e31bc9c142_n.jpg</span>
-                <input type="text" class="form-control" name="inputURL" aria-describedby="basic-addon3">
+                <input type="text" class="form-control form-control-lg" name="inputURL" aria-describedby="basic-addon3">
               </div>
               <div class="form-text">If you want to set a specific image URL, set it here. <a href="https://www.flickr.com/">Flickr</a> is the image API being used. The standard size used by this website is given by the "_n" suffix in the URL (as in
                 the example). <strong>Note:</strong> Don't define an URL if you want to get an image through the API retrieval.</div>
@@ -67,9 +69,9 @@
 
           <div class="row justify-content-center mb-5">
 
-            <div class="col-lg-1 col-md-2">
+            <div class="col-xxl-1 col-lg-2">
               <label for="person" class="form-label">Person</label>
-              <select class="form-select" name="person">
+              <select class="form-select form-select-lg" name="person">
                 <option value="Undefined" selected>Undefined</option>
                 <option value="João">João</option>
                 <option value="Vitor">Vitor</option>
@@ -77,9 +79,9 @@
               </select>
             </div>
 
-            <div class="col-lg-1 col-md-2">
+            <div class="col-xxl-1 col-lg-2">
               <label for="section" class="form-label">Section</label>
-              <select class="form-select" name="section">
+              <select class="form-select form-select-lg" name="section">
                 <option value="Kitchen" selected>Kitchen</option>
                 <option value="Toilet">Toilet</option>
                 <option value="Outside">Outside</option>
@@ -95,14 +97,14 @@
             <div class="col-lg-1 col-sm-2">
               <div class="form-check form-check-inline">
                 <input class="form-check-input" type="radio" name="status" value="" id="uncheckedStatus" checked>
-                <label class="form-check-label" for="uncheckedStatus">Not acquired</label>
+                <label class="form-check-label align-middle" for="uncheckedStatus">Not acquired</label>
               </div>
             </div>
 
             <div class="col-lg-1 col-sm-2">
               <div class="form-check form-check-inline">
                 <input class="form-check-input" type="radio" name="status" value="checked" id="checkedStatus">
-                <label class="form-check-label" for="checkedStatus">Acquired</label>
+                <label class="form-check-label align-middle" for="checkedStatus">Acquired</label>
               </div>
             </div>
 
@@ -111,7 +113,7 @@
           <div class="row justify-content-center">
 
             <div class="col-lg-1">
-              <button type="submit" class="btn btn-primary mb-2">Submit</button>
+              <button type="submit" class="btn btn-primary btn-lg mb-2">Add</button>
             </div>
           </div>
         </div>

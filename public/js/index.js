@@ -23,8 +23,6 @@ function transformToFormat(htmlCode)
 {
   const $code = $(htmlCode);
 
-  console.log($code.html());
-
   const item =
   {
     name: $code.find(".item-name").text(),

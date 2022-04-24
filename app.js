@@ -206,7 +206,7 @@ async function getAllItems()
 
 function createNewCard(item)
 {
-  return `<div class="col-xxl-2 col-md-6" id=${getItemIDName(item)}>
+  return `<div class="col-xxl-2 col-md-4 col-sm-6" id=${getItemIDName(item)}>
             <div class="card h-100">
               <img src="${item.imgURL}" class="card-img-top img-fluid item-img" alt="urlIMG">
               <div class="card-body">
