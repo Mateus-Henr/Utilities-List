@@ -18,6 +18,7 @@ const $ = cheerio.load(fs.readFileSync(__dirname + INDEX_HTML));
 const client = new MongoClient(URI);
 const app = express();
 
+
 app.use(express.static(__dirname + ROOT_FOLDER));
 app.use(bodyParser.urlencoded({extended: true}));
 
@@ -48,9 +49,9 @@ async function addItem(reqData)
   try
   {
     await client.connect();
-
     const database = client.db("listOfUtilities").collection("utilities");
     const query = {name: standardizeName(reqData.name), section: reqData.section};
+
     const foundItem = await database.findOne(query);
 
     if (foundItem)
@@ -65,6 +66,7 @@ async function addItem(reqData)
         }
       }
 
+      // Deciding which image is going to be attached to the item.
       if (reqData.inputURL)
       {
         editedItem.$set.imgURL = reqData.inputURL;
@@ -78,13 +80,12 @@ async function addItem(reqData)
         editedItem.$set.imgURL = await makeAPIRequestForImg(reqData.name, reqData.numberPic);
       }
 
-
-      await database.updateOne(query, editedItem);
-
+      // Setting values to the found item to replace it into the virtual DOM.
       foundItem.imgURL = editedItem.$set.imgURL;
       foundItem.person = editedItem.$set.person;
       foundItem.status = editedItem.$set.status;
 
+      await database.updateOne(query, editedItem);
       $(`#${getItemIDName(foundItem)}`).replaceWith(createNewCard(foundItem));
     }
     else
@@ -98,6 +99,7 @@ async function addItem(reqData)
         status: reqData.status
       }
 
+      // Deciding which image is going to be attached to the item.
       if (reqData.inputURL)
       {
         newItem.imgURL = reqData.inputURL;
@@ -164,12 +166,6 @@ async function makeAPIRequestForImg(itemName, numberPic)
 }
 
 
-function getItemIDName(item)
-{
-  return `${item.name}-${item.section}`;
-}
-
-
 async function getInitialData()
 {
   const unorganizedListOfItems = await getAllItems();
@@ -183,6 +179,9 @@ async function getInitialData()
 
   // Adding items to the virtual DOM.
   await organizedListOfItems.forEach((item) => $(`.${item.section}${SET_OF_SECTION_POSFIX}`).append(createNewCard(item)));
+
+  // Writing data on backup file.
+  fs.writeFile(__dirname + BACKUP_JSON, JSON.stringify(unorganizedListOfItems), () => {});
 }
 
 async function getAllItems()
@@ -193,6 +192,7 @@ async function getAllItems()
   {
     await client.connect();
     const database = client.db("listOfUtilities").collection("utilities");
+
     allItems = await database.find().toArray();
   }
   finally
@@ -206,7 +206,7 @@ async function getAllItems()
 
 function createNewCard(item)
 {
-  return `<div class="col-lg-2 col-md-4 col-sm-6" id=${getItemIDName(item)}>
+  return `<div class="col-xxl-2 col-md-6" id=${getItemIDName(item)}>
             <div class="card h-100">
               <img src="${item.imgURL}" class="card-img-top img-fluid item-img" alt="urlIMG">
               <div class="card-body">
@@ -225,6 +225,12 @@ function createNewCard(item)
 }
 
 
+function getItemIDName(item)
+{
+  return `${item.name}-${item.section}`;
+}
+
+
 function standardizeName(itemName)
 {
   const nameWithoutRedundantSpaces = itemName.replace(/\s+/g,' ').trim();
@@ -234,5 +240,6 @@ function standardizeName(itemName)
 
 
 app.listen(process.env.PORT || PORT, () => console.log(`Server is up and running on port ${PORT}.`));
+
 
 (async () => await getInitialData())();
