@@ -227,7 +227,7 @@ function createNewCard(item)
 
 function getItemIDName(item)
 {
-  return `${item.name}-${item.section}`;
+  return `${item.name.replace(/\s/g, '')}-${item.section}`;
 }
 
 
