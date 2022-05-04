@@ -1,10 +1,12 @@
 # Utilities list
 
-A simple list that allows the user to add items and remove items. Notice that every operation that is performed on an item affects the database where the item is stored as well. This app has been deployed using Heroku, and as the database, MongoDB is used. In order to improve performance, a virtual DOM is used in the backend instead of retrieving data every time that there's a modification in the data.
+A simple list that allows the user to add items and remove items. Notice that every operation that is performed on an item affects the database where the item is stored as well.
+- This app has been deployed using Heroku, and as the database, MongoDB is used.
+- In order to improve performance, a virtual DOM is used in the backend instead of retrieving data every time that there's a modification in the data.
 
 ## Functionalities
 - **Add items** - It allows you to add items by typing the item's information in the input boxes.
-- **Remove items** - Each item has a delete button which by clicking on it deletes the item from the database, consequently, the list as well.
+- **Remove items** - Each item has a delete button which by clicking on it deletes the item from the database, consequently, from the list as well.
 - **Edit items** - To edit items, the same input box used to add items is used. In order to perform this operation it's necessary to type the item's name again (the name must be the same as the item that you want to modify), then in the other input boxes, you can type the new information as you will.
 
 ## How to use
